@@ -1,21 +1,28 @@
+const {
+    JSON_COMMA,
+    JSON_COLON,
+    JSON_LEFTBRACKET,
+    JSON_RIGHTBRACKET,
+    JSON_LEFTBRACE,
+    JSON_RIGHTBRACE
+} = require("./constants.js");
+
 const JSON_QUOTE = '"',
       JSON_TRUE = 'true',
       JSON_FALSE = 'false',
       JSON_NULL = 'null';
 
-const JSON_SYNTAX = [',', ':', '{', '}', '[', ']'];
+const JSON_SYNTAX = [JSON_COMMA, JSON_COLON, JSON_LEFTBRACKET, JSON_RIGHTBRACKET, JSON_LEFTBRACE, JSON_RIGHTBRACE];
 const WHITESPACE = [" ", "\t", "\n", "\r", "\0"];
 
 lexor = (string) => {
     let tokens = [];
     while (string.length > 0) {
-        console.log("current string: ", string);
-
         let json_string = null;
         [json_string, string] = lex_string(string);
         if (json_string !== null) {
             tokens.push(json_string);
-            continue;
+            continue; //
         }
 
         let json_bool = null;
@@ -29,7 +36,7 @@ lexor = (string) => {
         [json_null, string] = lex_null(string);
         if (json_null) {
             tokens.push(null);
-            continue;
+            continue; // for the next iteration
         }
 
         let json_number = null;
@@ -140,7 +147,9 @@ lex_number = (string) => {
         }
     }
 
-    if (number === "") {
+    if (number === "-") {
+        throw new Error("Number cannot have trailing minus sign.");
+    } else if (number === "") {
         return [null, string];
     } else if (is_float) {
         return [parseFloat(number), string.substring(number.length)];
@@ -148,4 +157,6 @@ lex_number = (string) => {
         return [parseInt(number), string.substring(number.length)];
     }
 }
+
+
 module.exports = lexor;
