@@ -25,13 +25,13 @@
                         <button class="btn" onclick="copyToClipboard()">Copy to Clipboard</button>
                         <button class="btn" onclick="pasteFromClipboard()">Paste from Clipboard</button>
                     </div>
-                    <div id="result"></div>
+                    <div id="result" style="display: none;"></div>
 
+                    <div id="clipboardIndicator" class="clipboard-indicator" style="display: none;"></div>
                     <p class="note">Note: Syntax constants are currently not distinguishable from intended strings.</p>
-                    <!-- Clipboard Indicator -->
-                    <div id="clipboardIndicator" class="clipboard-indicator"></div>
                 </div>
             </div>
+
             <div class="col-md-6">
                 <div class="container">
                     <div class="card">
@@ -40,7 +40,6 @@
                             <div class="social-icons">
                                 <a href="https://www.linkedin.com/in/sandeshshahapur/" target="_blank"><i class="fab fa-linkedin"></i></a>
                                 <a href="https://github.com/sandeshshahapur" target="_blank"><i class="fab fa-github"></i></a>
-                                <a href="https://discord.com/users/361645639895089153" target="_blank"><i class="fab fa-discord"></i></a>
                             </div>
                         </div>
                     </div>
@@ -54,25 +53,27 @@
     function validateJson() {
         const jsonInput = document.getElementById('jsonInput').value;
         const resultElement = document.getElementById('result');
+
         try {
             const json = validate_json(jsonInput);
             resultElement.outerHTML = '<div class="alert alert-success" role="alert" id="result"><b>Valid JSON</b></div>';
         } catch (error) {
             resultElement.outerHTML = `<div class="alert alert-danger" role="alert" id="result"><b>Invalid JSON!</b><br></br> ${error}</div>`;
         }
+        resultElement.style.display = 'block';
     }
 
     function clearInput() {
         document.getElementById('jsonInput').value = '';
-        document.getElementById('result').outerHTML = '<div id="result"></div>';
+        document.getElementById('result').style.display = 'none';
     }
 
     function clipboardIndicator(msg) {
         const clipboardIndicator = document.getElementById('clipboardIndicator');
         clipboardIndicator.innerHTML = msg;
-        clipboardIndicator.style.visibility = 'visible';
+        clipboardIndicator.style.display = 'block';
         setTimeout(() => {
-            clipboardIndicator.style.visibility = 'hidden';
+            clipboardIndicator.style.display = 'none';
         }, 2000); // Hide after 2 seconds
     }
 
