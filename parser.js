@@ -1,11 +1,11 @@
-const {
+import {
     JSON_COMMA,
     JSON_COLON,
     JSON_LEFTBRACKET,
     JSON_RIGHTBRACKET,
     JSON_LEFTBRACE,
     JSON_RIGHTBRACE
-} = require("./constants.js");
+} from './constants.js';
 const JSON_QUOTE = '"';
 
 const INVALID_OBJECT_VALUES = [JSON_COMMA, JSON_COLON, JSON_RIGHTBRACKET, JSON_QUOTE];
@@ -109,6 +109,7 @@ let parse_array = (tokens) => {
             }
         } else {
             if (tokens[0] === JSON_LEFTBRACE) {
+                let object;
                 [tokens, object] = parse_object(tokens.slice(1));
                 array.push(object);
             } else if (tokens[0] === JSON_LEFTBRACKET) {
@@ -134,4 +135,4 @@ let parse_array = (tokens) => {
     throw new Error("Array not closed.");
 }
 
-module.exports = parser;
+export default parser;

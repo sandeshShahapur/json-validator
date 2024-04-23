@@ -1,11 +1,11 @@
-const {
+import {
     JSON_COMMA,
     JSON_COLON,
     JSON_LEFTBRACKET,
     JSON_RIGHTBRACKET,
     JSON_LEFTBRACE,
     JSON_RIGHTBRACE
-} = require("./constants.js");
+} from './constants.js';
 
 const JSON_QUOTE = '"',
       JSON_TRUE = 'true',
@@ -15,7 +15,7 @@ const JSON_QUOTE = '"',
 const JSON_SYNTAX = [JSON_COMMA, JSON_COLON, JSON_LEFTBRACKET, JSON_RIGHTBRACKET, JSON_LEFTBRACE, JSON_RIGHTBRACE];
 const WHITESPACE = [" ", "\t", "\n", "\r", "\0"];
 
-lexor = (string) => {
+let lexor = (string) => {
     let tokens = [];
     while (string.length > 0) {
         let json_string = null;
@@ -46,7 +46,7 @@ lexor = (string) => {
             continue;
         }
 
-        char = string.charAt(0);
+        let char = string.charAt(0);
         if (WHITESPACE.includes(char)) {
             string = string.substring(1);
         } else if (JSON_SYNTAX.includes(char)) {
@@ -59,7 +59,7 @@ lexor = (string) => {
     return tokens;
 }
 
-lex_string = (string) => {
+let lex_string = (string) => {
     if (string.charAt(0) !== JSON_QUOTE)
         return [null, string];
 
@@ -77,7 +77,7 @@ lex_string = (string) => {
     throw new Error("Expected end-of-string quote.");
 }
 
-lex_bool = (string) => {
+let lex_bool = (string) => {
     if (string.startsWith(JSON_TRUE)) {
         return [true, string.substring(JSON_TRUE.length)];
     } else if (string.startsWith(JSON_FALSE)) {
@@ -87,7 +87,7 @@ lex_bool = (string) => {
     }
 }
 
-lex_null = (string) => {
+let lex_null = (string) => {
     if (string.startsWith(JSON_NULL)) {
         return [true, string.substring(JSON_NULL.length)];
     } else {
@@ -102,7 +102,7 @@ lex_null = (string) => {
  * - A number cannot have leading exponent.
  * - Exonents can have leading zeros.
  */
-lex_number = (string) => {
+let lex_number = (string) => {
     let number = "";
     let is_float = false;
     let is_exponential = false;
@@ -159,4 +159,4 @@ lex_number = (string) => {
 }
 
 
-module.exports = lexor;
+export default lexor;

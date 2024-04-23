@@ -1,15 +1,6 @@
-const JSON_COMMA = ',',
-      JSON_COLON = ':',
-      JSON_LEFTBRACKET = '[',
-      JSON_RIGHTBRACKET = ']',
-      JSON_LEFTBRACE = '{',
-      JSON_RIGHTBRACE = '}'
-
-module.exports = {
-    JSON_COMMA,
-    JSON_COLON,
-    JSON_LEFTBRACKET,
-    JSON_RIGHTBRACKET,
-    JSON_LEFTBRACE,
-    JSON_RIGHTBRACE
-}
+export const JSON_COMMA = ',';
+export const JSON_COLON = ':';
+export const JSON_LEFTBRACKET = '[';
+export const JSON_RIGHTBRACKET = ']';
+export const JSON_LEFTBRACE = '{';
+export const JSON_RIGHTBRACE = '}';
