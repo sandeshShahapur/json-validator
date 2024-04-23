@@ -24,15 +24,13 @@ body, html {
     position: relative; /* Position relative for line numbers */
 }
 
-#jsonInput::before {
-    content: counter(line-number); /* Counter for line numbers */
-    counter-increment: line-number;
-    position: absolute;
-    left: -30px; /* Adjust this value as needed */
-    top: 0;
-    padding-right: 10px;
-    text-align: right;
-    color: #aaa;
+#jsonInput {
+    background: url('./lineCount.png');
+    background-attachment: local;
+    background-repeat: no-repeat;
+    padding-left: 35px;
+    padding-top: 10px;
+    border-color:#ccc;
 }
 
 @media screen and (max-width: 992px) {
@@ -51,6 +49,20 @@ body, html {
     margin-bottom: 20px;
     overflow-wrap: break-word;
 }
+
+.note {
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+.note p {
+    margin: 0;
+    color: #721c24;
+}
+
 .btn-group {
     display: flex;
     justify-content: space-between;
@@ -83,13 +95,10 @@ body, html {
     margin: 0 5px;
 }
 
-#clipboardIndicator {
-    visibility: hidden;
-    position: absolute;
-    top: -10px;
-    right: -10px;
-    background-color: #007bff;
+.clipboard-indicator {
+    background-color: rgb(0, 255, 0);
     color: #fff;
     padding: 5px 10px;
-    border-radius: 50%;
+    border-radius: 5px;
+    visibility: hidden;
 }

@@ -16,6 +16,7 @@
             <div class="col-md-6">
                 <div class="container">
                     <textarea id="jsonInput" placeholder="Enter JSON here..." rows="5"></textarea>
+
                     <div class="btn-group">
                         <button class="btn" onclick="validateJson()">Validate</button>
                         <button class="btn" onclick="clearInput()">Clear</button>
@@ -25,6 +26,10 @@
                         <button class="btn" onclick="pasteFromClipboard()">Paste from Clipboard</button>
                     </div>
                     <div id="result"></div>
+
+                    <p class="note">Note: Syntax constants are currently not distinguishable from intended strings.</p>
+                    <!-- Clipboard Indicator -->
+                    <div id="clipboardIndicator" class="clipboard-indicator"></div>
                 </div>
             </div>
             <div class="col-md-6">
@@ -48,20 +53,27 @@
 <script>
     function validateJson() {
         const jsonInput = document.getElementById('jsonInput').value;
-        const isValid = validate_json(jsonInput);
         const resultElement = document.getElementById('result');
-        if (isValid) {
-            resultElement.innerHTML = 'Valid JSON!';
-            resultElement.style.color = 'green';
-        } else {
-            resultElement.innerHTML = 'Invalid JSON!';
-            resultElement.style.color = 'red';
+        try {
+            const json = validate_json(jsonInput);
+            resultElement.outerHTML = '<div class="alert alert-success" role="alert" id="result"><b>Valid JSON</b></div>';
+        } catch (error) {
+            resultElement.outerHTML = `<div class="alert alert-danger" role="alert" id="result"><b>Invalid JSON!</b><br></br> ${error}</div>`;
         }
     }
 
     function clearInput() {
         document.getElementById('jsonInput').value = '';
-        document.getElementById('result').innerHTML = '';
+        document.getElementById('result').outerHTML = '<div id="result"></div>';
+    }
+
+    function clipboardIndicator(msg) {
+        const clipboardIndicator = document.getElementById('clipboardIndicator');
+        clipboardIndicator.innerHTML = msg;
+        clipboardIndicator.style.visibility = 'visible';
+        setTimeout(() => {
+            clipboardIndicator.style.visibility = 'hidden';
+        }, 2000); // Hide after 2 seconds
     }
 
     function copyToClipboard() {
@@ -69,10 +81,7 @@
         navigator.clipboard.writeText(jsonInput)
             .then(() => {
                 // Change the visual indicator
-                document.getElementById('clipboardIndicator').style.visibility = 'visible';
-                setTimeout(() => {
-                    document.getElementById('clipboardIndicator').style.visibility = 'hidden';
-                }, 2000); // Hide after 2 seconds
+                clipboardIndicator('Copied to Clipboard');
             })
             .catch(err => {
                 console.error('Failed to copy: ', err);
@@ -83,6 +92,9 @@
         navigator.clipboard.readText()
             .then(text => {
                 document.getElementById('jsonInput').value = text;
+
+                // change the visual indicator
+                clipboardIndicator('Pasted from Clipboard');
             })
             .catch(err => {
                 console.error('Failed to paste: ', err);

@@ -5,27 +5,14 @@ import parser from "./parser.js";
 window.validate_json = (string) => {
     console.log("Input JSON string: ", string);
     if (string === "") {
-        return false;
+      throw new Error("Empty JSON string.");
     }
 
-    let tokens;
-    try {
-        tokens = lexor(string);
-    } catch (error) {
-        console.log("error: ", error);
-        return false;
-    }
-    console.log("\n\nTokens produced: ", tokens);
+    let tokens = lexor(string);
+    console.log("\n\nOutput tokens: ", tokens);
 
-    let json;
-    try {
-        json = parser(tokens);
-    } catch (error) {
-        console.log("error: ", error);
-        return false;
-    }
+    let json = parser(tokens);
     console.log("\n\nOutput JSON: ", json);
-    return true;
 }
 
 export default validate_json;
