@@ -26,7 +26,7 @@ let parse_object = (tokens) => {
     let key = null, value = null;
     while (tokens.length > 0) {
         if (tokens[0] === JSON_RIGHTBRACE) {
-            if (Object.keys(object).length > 0 && expectedState !== "comma") {
+            if (key !== null && expectedState !== "comma") {
                 if (expectedState === "key") {
                     throw new Error("Trailing comma.");
                 } else if (expectedState === "colon") {
