@@ -2,19 +2,11 @@
 import lexor from "./lexor.js";
 import parser from "./parser.js";
 
-// Global function to validate JSON string
-window.validate_json = (string) => {
-    console.log("Input JSON string: ", string);
-    if (string === "") {
-      throw new Error("Empty JSON string.");
-    } else if (string.charAt(0) === "\"") {
-      if (string.charAt(string.length - 1) !== "\"") {
-        throw new Error("Root JSON string not properly closed");
-      }
-      string = string.substring(1, string.length - 1);
-    }
+window.validate_json = (json_string) => {
+    console.log("Input JSON string: ", json_string);
+    if (json_string === "") throw new Error("Empty JSON string.");
 
-    let tokens = lexor(string);
+    let tokens = lexor(json_string);
     console.log("\n\nOutput tokens: ", tokens);
 
     let json = parser(tokens);

@@ -21,28 +21,28 @@ let lexor = (string) => {
         let json_string = null;
         [json_string, string] = lex_string(string);
         if (json_string !== null) {
-            tokens.push(json_string);
+            tokens.push({ type: "string", value: json_string });
             continue; //
         }
 
         let json_bool = null;
         [json_bool, string] = lex_bool(string);
         if (json_bool !== null) {
-            tokens.push(json_bool);
+            tokens.push({ type: "bool", value: json_bool });
             continue;
         }
 
         let json_null = null;
         [json_null, string] = lex_null(string);
         if (json_null) {
-            tokens.push(null);
+            tokens.push({ type: "null", value: json_null });
             continue; // for the next iteration
         }
 
         let json_number = null;
         [json_number, string] = lex_number(string);
         if (json_number !== null) {
-            tokens.push(json_number);
+            tokens.push({ type: "number", value: json_number });
             continue;
         }
 
@@ -50,7 +50,7 @@ let lexor = (string) => {
         if (WHITESPACE.includes(char)) {
             string = string.substring(1);
         } else if (JSON_SYNTAX.includes(char)) {
-            tokens.push(char);
+            tokens.push({ type: "syntax", value: char });
             string = string.substring(1);
         } else {
             throw new Error("Unexpected character.");
