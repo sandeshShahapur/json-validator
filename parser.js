@@ -11,15 +11,32 @@ const JSON_QUOTE = '"';
 const INVALID_OBJECT_VALUES = [JSON_COMMA, JSON_COLON, JSON_RIGHTBRACKET, JSON_QUOTE];
 const INVALID_ARRAY_VALUES = [JSON_COMMA, JSON_COLON, JSON_RIGHTBRACE, JSON_QUOTE];
 
-
-let parser = (tokens) => {
-    if (tokens[0] !== JSON_LEFTBRACE)
-        throw new Error("Root must be an object.");
-
-    return parse_object(tokens.slice(1))[1];
+const parser = (tokens) => {
+    let isRoot = true, root;
+    while (tokens.length > 0) {
+        if (tokens[0] === JSON_LEFTBRACE) {
+            if (!isRoot) {
+                throw new Error("Root cannot be more than one object.");
+            }
+            [tokens, root] = parse_object(tokens.slice(1));
+        } else if (tokens[0] === JSON_LEFTBRACKET) {
+            if (!isRoot) {
+                throw new Error("Root cannot be more than one array.");
+            }
+            [tokens, root] = parse_array(tokens.slice(1));
+        } else {
+            if (!isRoot) {
+                throw new Error("Root cannot be multi valued.");
+            }
+            root = tokens.shift();
+            console.log("Root: ", root);
+        }
+        isRoot = false;
+    }
+    return root;
 }
 
-let parse_object = (tokens) => {
+const parse_object = (tokens) => {
     let object = {};
     let expectedState = "key"; // key, colon, value, comma
 
@@ -87,7 +104,7 @@ let parse_object = (tokens) => {
     throw new Error("Object not closed.");
 }
 
-let parse_array = (tokens) => {
+const parse_array = (tokens) => {
     let array = [];
     let expectedState = "value";
 
