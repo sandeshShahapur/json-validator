@@ -8,12 +8,11 @@ JSON (JavaScript Object Notation) is a lightweight data-interchange format commo
 
 This tool performs lexical analysis to tokenize the input string and syntactical analysis to check the structure and validity of the JSON data as per the JSON specification.
 
-## Features
+## Implementation technique
 Lexical Analysis: Tokenizes the input JSON string to identify individual tokens such as primitive data types and keywords.
+
 Syntactical Analysis: Checks the structure and syntax of the JSON string to ensure it conforms to the JSON specification.
 Error Handling: Provides error messages for invalid JSON strings.
 
-It additionally constructs and returns an equivalent JavaScript object.
-
-> [!WARNING]
-> It currently does not accurately handle JSON strings where the keywords or constants are quoted (':', '{', '[', '}', ']' ',')
+---
+It additionally constructs and returns the equivalent JavaScript value of the inputted JSON string.
