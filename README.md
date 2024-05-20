@@ -15,7 +15,3 @@ It additionally constructs and returns an equivalent JavaScript object.
 
 ## Example
 ![image](https://github.com/sandeshShahapur/json-validator/assets/110241292/793d58d2-4558-42ca-aa33-476a709a6b24)
-
-
-> [!WARNING]
-> It currently does not accurately handle JSON strings where the keywords or constants are quoted (':', '{', '[', '}', ']' ',')
